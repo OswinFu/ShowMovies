@@ -18,11 +18,10 @@ export const MovieCard = ({ movie, moviesTitle }) => {
       sx={{
         maxWidth: "400px",
         backgroundColor: "#000",
-        position: "relative", // 确保图片和文字能够相对定位
+        position: "relative",
         borderRadius: 10,
         borderColor: "transparent",
         boxShadow: "0 0  2px 3px rgba(20, 20, 20, 0.6)",
-        // border: "1px solid transparent",
 
         "&:hover": {
           boxShadow: {
@@ -30,7 +29,6 @@ export const MovieCard = ({ movie, moviesTitle }) => {
             lg: "0 0  8px 10px rgba(0,0,0,0.6)",
           },
           outline: "2px solid #67d735",
-          // boxShadow: "0 0 0 2px #67d735",
         },
       }}
     >
@@ -38,14 +36,13 @@ export const MovieCard = ({ movie, moviesTitle }) => {
         sx={{
           position: "relative",
           cursor: "default",
-          // backgroundColor: "#000",
           width: "100%",
           height: "100%",
         }}
         disableRipple
         className="CardActionArea"
       >
-        {/* 图片区域 */}
+        {/* 圖片容器 */}
         <CardMedia
           className="movie-media"
           component="img"
@@ -54,8 +51,6 @@ export const MovieCard = ({ movie, moviesTitle }) => {
           sx={{
             position: "relative",
             width: "100%",
-            // height: "100%",
-            // minHeight: "396px",
             objectFit: "cover",
             aspectRatio: "2 / 3",
             backgroundColor: "#000",
@@ -64,21 +59,18 @@ export const MovieCard = ({ movie, moviesTitle }) => {
 
         <Box
           width="100%"
-          height="100%" //CardAction 預設48px
+          height="100%"
           className="hover-text"
           sx={{
-            position: "absolute", // 绝对定位，确保它只覆盖在图片上
+            position: "absolute",
             top: 0,
             left: 0,
-
-            backgroundColor: "rgba(0, 0, 0, 0.8)", // 透明黑色背景
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
             color: "white",
-
-            opacity: 0, // 默认隐藏
-
-            transition: "opacity 0.3s ease-in-out", // 平滑过渡
+            opacity: 0,
+            transition: "opacity 0.3s ease-in-out",
             "&:hover": {
-              opacity: 1, // hover时显示文字
+              opacity: 1,
             },
           }}
         >
@@ -101,7 +93,6 @@ export const MovieCard = ({ movie, moviesTitle }) => {
                   },
                 },
               }}
-              // 设置 title 的颜色
               sx={{
                 pb: 1,
                 pt: { xs: 1, lg: 4 },

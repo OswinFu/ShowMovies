@@ -4,7 +4,7 @@ It is my first side project.
 About according film types to search films info.
 Data source from TMDB API.
 
-# LICENSE
+## LICENSE
 
 MIT License
 
@@ -28,5 +28,5 @@ RESTful APIs
 
 ## Features
 
-- Search films by genes
+- Search films by types
 - Display films info
