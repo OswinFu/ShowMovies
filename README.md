@@ -28,5 +28,5 @@ RESTful APIs
 
 ## Features
 
-- Search films by genes
+- Search films by types
 - Display films info
