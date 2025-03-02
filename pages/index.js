@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChipSelect } from "../components/chip"; // 引入 ChipSelect
+import { ChipSelect } from "../components/chip";
 import { MovieCard } from "../components/card";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -10,9 +10,9 @@ export default function Home() {
   const [selectedTagsId, setSelectedTagsId] = useState([]); // 存儲選中的標籤狀態
   const [selectedTagsName, setSelectedTagsName] = useState([]); //存取標籤名稱
   const [movies, setMovies] = useState([]); // 存儲從 API 獲取的電影資料
+  const [moviesTitle, setMoviesTitle] = useState([]); // 存儲從 API 獲取的電影標題
   const [loading, setLoading] = useState(false); // 加載狀態
   const [error, setError] = useState(null); // 錯誤訊息
-  const [moviesTitle, setMoviesTitle] = useState([]);
 
   // 處理標籤點擊
   const handleClick = ({ updateSelectedTagsId, updateSelectedTagsName }) => {
@@ -124,8 +124,7 @@ export default function Home() {
               /> // 將電影資訊用MAP給美的電影卡填入資訊
             ))
           : !loading}
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {/* 錯誤顯示 */}
+        {error && <p style={{ color: "red" }}>{error}</p> /* 錯誤顯示 */}
       </Box>
     </>
   );
