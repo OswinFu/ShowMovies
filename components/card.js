@@ -1,16 +1,23 @@
-import React from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Stack } from "@mui/system";
-import { CardActionArea } from "@mui/material";
+import Stack from "@mui/system/Stack";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardActions from "@mui/material/CardActions";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-export const MovieCard = ({ movie, moviesTitle }) => {
+export const MovieCard = ({ movie, moviesTitle, isLike, handleClickLike }) => {
   const url = `https://image.tmdb.org/t/p/original/${movie.poster_path}`;
-  console.log("Card tagName", moviesTitle);
   const clearName = moviesTitle.join(" ");
+  // console.log("從父組件傳來的isLikes", isLike);
+  // 檢查點擊的like是否與儲存的like電影列表裡的電影Id相同，相同就提取沒有的，不同就新增到like電影列表
+  const clickLike = () => {
+    // 將LIke點擊狀態反轉與電影資訊傳回父組件
+    handleClickLike(!isLike, movie, moviesTitle);
+  };
 
   return (
     <Card
@@ -19,7 +26,7 @@ export const MovieCard = ({ movie, moviesTitle }) => {
         maxWidth: "400px",
         backgroundColor: "#000",
         position: "relative",
-        borderRadius: 10,
+        borderRadius: { xs: 5, sm: 10 },
         borderColor: "transparent",
         boxShadow: "0 0  2px 3px rgba(20, 20, 20, 0.6)",
 
@@ -116,6 +123,28 @@ export const MovieCard = ({ movie, moviesTitle }) => {
           </Stack>
         </Box>
       </CardActionArea>
+      <CardActions
+        sx={{
+          backgroundColor: "rgba(59, 59, 59, 1)",
+          display: "flex",
+          alignItems: "center",
+          p: "0.25rem",
+          justifyContent: "center",
+          ml: 0,
+        }}
+      >
+        <IconButton
+          aria-label="add to favorites"
+          onClick={clickLike}
+          sx={{
+            color: isLike ? "rgb(103, 235, 53)" : "rgba(0, 0, 0, 0.5)",
+
+            p: "0.25rem",
+          }}
+        >
+          <FavoriteIcon />
+        </IconButton>
+      </CardActions>
     </Card>
   );
 };

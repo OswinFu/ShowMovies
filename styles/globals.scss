@@ -1,3 +1,7 @@
+$primary-color: #18181a;
+$secondary-color: #67d735;
+$font-color: #fffffd;
+
 * {
   padding: 0;
   margin: 0;
@@ -32,10 +36,22 @@ body {
   }
   .appBar {
     padding: 0.5rem;
-    h1 {
-      font-size: 4rem;
-      font-weight: 900;
+
+    .h1Box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      h1 {
+        font-size: 4rem;
+        font-weight: 900;
+      }
+      .favIcon {
+        position: absolute;
+        right: 1rem;
+      }
     }
+
     .chip-box {
       gap: 1px;
 
@@ -125,8 +141,8 @@ body {
       }
       .chip-box {
         gap: 1px;
-        padding-left: 16rem;
-        padding-right: 16rem;
+        padding-left: 10rem;
+        padding-right: 10rem;
 
         .chip {
           font-size: 1rem;

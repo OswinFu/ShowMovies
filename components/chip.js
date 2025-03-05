@@ -1,6 +1,6 @@
 import { Box, Chip } from "@mui/material";
 import { TagTransfer } from "../utils/tag-util";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 // 標籤子組件
 // 資料傳遞透過參數進行
@@ -24,7 +24,7 @@ const ChipSelect = ({ handleClick, selectedTagsId, selectedTagsName }) => {
   };
 
   useEffect(() => {
-    console.log("MyComponent rendered!");
+    console.log("chip元件啟用");
   }, [selectedTagsId]); // 標籤更新會調用
 
   return (
