@@ -26,6 +26,7 @@ const ItemsList = ({ handleClickLike, showList, clickLikes }) => {
             borderRadius: 2,
             border: "1px solid #67d735",
             overflowY: "auto",
+            overscrollBehavior: "contain",
           }}
         >
           {clickLikes.length === 0 ? (
