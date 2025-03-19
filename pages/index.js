@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
-import { ChipSelect } from "../components/ChipSelect";
-import { MovieCard } from "../components/MovieCard";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import AppBar from "@mui/material/AppBar";
+import ChipSelect from "../components/header/ChipSelect";
+import MovieCard from "../components/main/MovieCard";
+import StyledButton from "../components/UI/Button";
+import StyledBox from "../components/UI/Box";
 import axios from "axios";
-import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import CloseIcon from "@mui/icons-material/Close";
-import { ItemsList } from "../components/ItemsList";
+import ItemsList from "../components/header/ItemsList";
 import Container from "@mui/material/Container";
-import Toolbar from "@mui/material/Toolbar";
+import StyledAppBar from "../components/UI/AppBar";
+import ToolbarIcons from "../components/footer/ToolBar";
+import ListButton from "../components/header/ListButton";
+import Typography from "@mui/material/Typography";
 
 export default function Home() {
   const [selectedTagsId, setSelectedTagsId] = useState([]); // 存儲選中的標籤狀態
@@ -18,9 +17,10 @@ export default function Home() {
   const [movies, setMovies] = useState([]); // 存儲從 API 獲取的電影資料
   const [moviesTitle, setMoviesTitle] = useState([]); // 存儲從 API 獲取的電影標題
   const [clickLikes, setClickLikes] = useState([]); //儲存喜歡的電影列表
-  const [loading, setLoading] = useState(null); // 加載狀態
+  const [loading, setLoading] = useState(false); // 加載狀態
   const [error, setError] = useState(null); // 錯誤訊息
   const [showList, setShowList] = useState(false);
+  const [search, setSearch] = useState(false);
 
   // 處理標籤點擊
   const handleClick = ({ updateSelectedTagsId, updateSelectedTagsName }) => {
@@ -50,10 +50,11 @@ export default function Home() {
   // 發送 API 請求
   const fetchMovies = async () => {
     if (selectedTagsId.length === 0) {
-      setError(alert("請選擇一個標籤！"));
+      alert("請選擇一個標籤！");
+      setError("請選擇一個標籤！");
       return; // 如果沒有選擇標籤，則不發送請求
     }
-
+    setMovies([]);
     setLoading(true); // 開始加載
 
     try {
@@ -64,59 +65,65 @@ export default function Home() {
         error: error,
       });
 
-      setMovies(response.data.data.results); // 設置電影資料
-      setMoviesTitle(response.data.tagsName); // 設置電影標題
+      const moviesData = response.data.data.results;
+
+      if (moviesData.length === 0) {
+        setMovies([]);
+      } else {
+        setMovies(moviesData); // 設置電影資料
+      }
+      setMoviesTitle(response.data.tagsName);
     } catch (err) {
-      setError(alert("資料加載失敗！"), err); // 抓到錯誤，給錯誤訊息
+      setError(err); // 抓到錯誤，給錯誤訊息
+      alert("資料加載失敗", err);
+      setMovies([]);
     } finally {
-      setLoading(false); // 完成加載
+      setSearch(true);
+
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     if (error) {
-      alert("出現錯誤", error);
-      setError(null);
+      alert("出現錯誤");
+      setError(err);
     }
   }, [error]);
 
   return (
     <>
-      <AppBar
-        className="appBar"
-        sx={{
-          backgroundColor: "black",
-          width: "100%",
-          p: 2,
-          position: "fixed",
-          zIndex: 1,
-        }}
-      >
-        <AppBar>
-          <Toolbar
+      <StyledAppBar>
+        <ToolbarIcons
+          color={clickLikes.length > 0 ? "primary.main" : "secondary.main"}
+          setShowList={setShowList}
+          showList={showList}
+        />
+        {showList && (
+          <StyledBox
             sx={{
-              width: "100%",
-              backgroundColor: "red",
-              margin: 0,
-              position: "fixed",
-              top: "auto",
-              bottom: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              zIndex: 2,
+              position: "absolute",
+              width: "100vw",
+              height: "calc(100vh - 50px)",
+              display: { xs: "block", sm: "none" },
             }}
           >
-            <IconButton>
-              <FavoriteIcon sx={{ scale: 1.5 }} />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Box
+            <ItemsList
+              width="100%"
+              border="none"
+              showList={showList}
+              clickLikes={clickLikes}
+              handleClickLike={handleClickLike}
+            />
+          </StyledBox>
+        )}
+        <StyledBox
           sx={{
             zIndex: 2,
             position: "absolute",
-            top: "4.5rem",
-            right: 6,
+            top: "3.5rem",
+            right: "1.5rem",
             display: { xs: "none", sm: "block" },
           }}
         >
@@ -125,37 +132,29 @@ export default function Home() {
             clickLikes={clickLikes}
             handleClickLike={handleClickLike}
           />
-        </Box>
-        <Box className="h1Box">
-          <h1>種類秀電影</h1>
-          <Box
-            className="favIcon"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            {/* 控制icon，未開啟愛心，已開啟X*/}
-            <IconButton
-              aria-label="show like movies list"
-              type="button"
-              onClick={() => setShowList(!showList)}
-            >
-              {showList ? (
-                <CloseIcon sx={{ color: "#67d735" }} />
-              ) : (
-                <FavoriteIcon sx={{ color: "#67d735", scale: 1.25 }} />
-              )}
-            </IconButton>
-          </Box>
-        </Box>
-
+        </StyledBox>
+        <StyledBox
+          sx={{
+            position: "relative",
+          }}
+        >
+          <Typography variant="h1" sx={{ fontSize: { lg: "3rem" } }}>
+            種類秀電影
+          </Typography>
+          <ListButton
+            showList={showList}
+            setShowList={setShowList}
+            color={clickLikes.length > 0 ? "primary.main" : "secondary.main"}
+          />
+        </StyledBox>
         <ChipSelect
           handleClick={handleClick}
           selectedTagsId={selectedTagsId}
           selectedTagsName={selectedTagsName}
         />
 
-        <div className="btn">
-          <Button
-            className="button"
+        <StyledBox>
+          <StyledButton
             type="submit"
             variant="contained"
             onClick={() =>
@@ -164,10 +163,9 @@ export default function Home() {
             disableRipple
           >
             查詢電影
-          </Button>
+          </StyledButton>
 
-          <Button
-            className="button"
+          <StyledButton
             type="reset"
             variant="contained"
             onClick={() => {
@@ -178,35 +176,31 @@ export default function Home() {
             disableRipple
           >
             重新查詢
-          </Button>
-        </div>
-      </AppBar>
+          </StyledButton>
+        </StyledBox>
+      </StyledAppBar>
 
-      <Box
-        className="card-box"
+      <StyledBox
+        display="grid"
         sx={{
-          display: "grid",
-
           gridTemplateColumns:
-            movies.length === 0
-              ? "repeat(1)"
+            movies.length === 0 && !loading && search
+              ? "1fr"
               : {
                   xs: "repeat(2,1fr)",
+                  sm: "repeat(3,1fr)",
                   md: "repeat(3,1fr)",
-                  lg: "repeat(3,1fr)",
                 },
-          width: movies.length === 0 ? "100%" : "90%",
-          gap: { xs: 1, sm: 3, lg: 3 },
-          alignItems: "center",
+          width: { xs: "80%", sm: "100%", lg: "100%" },
+          gap: { xs: 1, sm: 3, md: 3, lg: 3 },
           justifyItems: "center",
           margin: "0 auto",
-          marginTop: { xs: 29, sm: 27, md: 32, lg: 26 },
-          padding: { lg: 5, xs: 0, sm: 2 },
+          marginTop: { xs: 29, sm: 22, md: 21, lg: 20 },
+          "@media (min-width:344px) and (max-width:360px)": { marginTop: 34 },
+          padding: { lg: 5, xs: 1, sm: 5 },
         }}
       >
-        {loading === false && movies.length === 0 ? (
-          <Container sx={{ padding: 2 }}>找不到電影資料</Container>
-        ) : (
+        {movies.length > 0 &&
           movies.map((movie) => {
             //判斷儲存的喜歡電影列表clickLikes與每部電影比對，是否有點擊喜歡
             const isLike = clickLikes.some((flv) => flv.movie.id === movie.id);
@@ -217,11 +211,17 @@ export default function Home() {
                 moviesTitle={moviesTitle}
                 handleClickLike={handleClickLike}
                 isLike={isLike}
+                loading={loading}
               /> // 將電影資訊用MAP給每個電影卡填入資訊
             );
-          })
+          })}
+
+        {movies.length === 0 && !loading && search && (
+          <Container component="p" sx={{ padding: 2, fontSize: "1.5rem" }}>
+            找不到電影資料
+          </Container>
         )}
-      </Box>
+      </StyledBox>
     </>
   );
 }

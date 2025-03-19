@@ -6,7 +6,7 @@ const api = "https://api.themoviedb.org/3/discover/movie?";
 export default async function handler(req, res) {
   const { tagsId, tagsName } = req.body;
 
-  // 確保 `with_genres` 是逗號分隔的字串
+  // 以逗號分開
   const tagIdsString = tagsId.join(",");
 
   try {
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     if (result) {
       res.status(200).json(result); // 確保發送回應
     } else {
-      res.status(404).json({ error: "No data found" }); // 如果沒資料，返回錯誤
+      res.status(404).json({ error: "找不到資料" }); // 如果沒資料，返回錯誤
     }
   } catch (err) {
     console.error("API 請求錯誤", err);

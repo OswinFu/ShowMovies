@@ -1,2 +1,2 @@
-# 设置所有文本文件的行尾格式为 LF
+#設置檔案結尾為LF
 * text=auto eol=lfgit

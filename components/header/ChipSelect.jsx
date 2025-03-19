@@ -1,6 +1,6 @@
-import { Box, Chip } from "@mui/material";
-import { TagTransfer } from "../utils/tag-util";
-import { useEffect } from "react";
+import { TagTransfer } from "../../utils/tag-util";
+import StyledBox from "../UI/Box";
+import StyledChip from "../UI/Chip";
 
 // 標籤子組件
 // 資料傳遞透過參數進行
@@ -23,48 +23,31 @@ const ChipSelect = ({ handleClick, selectedTagsId, selectedTagsName }) => {
     handleClick({ updateSelectedTagsId, updateSelectedTagsName });
   };
 
-  useEffect(() => {
-    console.log("chip元件啟用");
-  }, [selectedTagsId]); // 標籤更新會調用
-
   return (
-    <Box
-      className="chip-box"
+    <StyledBox
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        gap: 5,
-        position: "relative",
-        flexWrap: "wrap",
+        gap: "1px",
+        paddingX: { sm: "2rem" },
+        "@media (min-width:375px) and (max-width:430px)": {
+          paddingX: "0.45rem",
+        },
+        "@media (min-width:768px) and (max-width:900px)": {
+          paddingX: "2.5rem",
+        },
       }}
     >
       {TagTransfer.map((tag) => (
-        <Chip
-          className="chip"
+        <StyledChip
           key={tag.id}
           label={tag.name}
           onClick={() => handleChipClick({ tag })} // 點擊時傳遞 tag
           clickable
-          sx={{
-            // 現在點選的tag有沒有選取，有給顏色，沒有給透明
-            backgroundColor: selectedTagsId.includes(tag.id)
-              ? "#67d735"
-              : "transparent",
-
-            ":hover": {
-              backgroundColor: "#67d735",
-            },
-            marginY: 2,
-            marginX: 0.5,
-            color: "#fffffd",
-            fontSize: "1.5rem",
-          }}
+          selected={selectedTagsId.includes(tag.id)}
+          sx={{ fontSize: { xs: "0.95rem", sm: "1rem" } }}
         />
       ))}
-    </Box>
+    </StyledBox>
   );
 };
 
-export { ChipSelect };
+export default ChipSelect;
