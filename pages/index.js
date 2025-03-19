@@ -50,8 +50,9 @@ export default function Home() {
   // 發送 API 請求
   const fetchMovies = async () => {
     if (selectedTagsId.length === 0) {
-      alert("請選擇一個標籤！");
-      setError("請選擇一個標籤！");
+      const errorMessage = "請選擇一個標籤！";
+      alert(errorMessage);
+      setError(errorMessage);
       return; // 如果沒有選擇標籤，則不發送請求
     }
     setMovies([]);
@@ -72,22 +73,21 @@ export default function Home() {
       } else {
         setMovies(moviesData); // 設置電影資料
       }
+
       setMoviesTitle(response.data.tagsName);
     } catch (err) {
-      setError(err); // 抓到錯誤，給錯誤訊息
       alert("資料加載失敗", err);
+      setError(err); // 抓到錯誤，給錯誤訊息
       setMovies([]);
     } finally {
       setSearch(true);
-
       setLoading(false);
     }
   };
 
   useEffect(() => {
     if (error) {
-      alert("出現錯誤");
-      setError(err);
+      console.error(error);
     }
   }, [error]);
 
@@ -197,7 +197,8 @@ export default function Home() {
           margin: "0 auto",
           marginTop: { xs: 29, sm: 22, md: 21, lg: 20 },
           "@media (min-width:344px) and (max-width:360px)": { marginTop: 34 },
-          padding: { lg: 5, xs: 1, sm: 5 },
+          marginBottom: { xs: 7, sm: 0 },
+          padding: { xs: 1, sm: 5, lg: 5 },
         }}
       >
         {movies.length > 0 &&

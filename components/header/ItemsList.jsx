@@ -19,9 +19,13 @@ const ItemsList = ({
       {showList && (
         <StyledList width={width} border={border}>
           {clickLikes.length === 0 ? (
-            <StyledListItem>
+            <StyledListItem sx={{ paddingLeft: 0 }}>
               <StyledListItemText>
-                <StyledTypography component="p" variant="body1">
+                <StyledTypography
+                  component="p"
+                  variant="body1"
+                  sx={{ textAlign: "center" }}
+                >
                   沒有收藏資料
                 </StyledTypography>
               </StyledListItemText>

@@ -14,6 +14,7 @@ const StyledToolBar = styled(Toolbar)`
   align-items: center;
   justify-content: space-around;
   min-height: 50px;
+  z-index: 3;
 `;
 
 export { StyledToolBar };
