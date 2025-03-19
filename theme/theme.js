@@ -8,7 +8,7 @@ const theme = createTheme({
       contrastText: "#fffffd",
     },
     secondary: {
-      main: "rgba(0,0,0,0.5)",
+      main: "rgba(128, 128, 128, 0.5)",
     },
     text: {
       primary: "#fffffd",
@@ -16,7 +16,7 @@ const theme = createTheme({
     },
     background: {
       default: "#18181a",
-      paper: "rgba(50, 50, 50, 0.8)",
+      paper: "rgba(20, 20, 20, 0.9)",
     },
   },
   typography: {
