@@ -163,9 +163,13 @@ const StyledCardGroup = ({
                         marginTop: { xs: "0.25rem", lg: "1rem" },
                         fontSize: {
                           xs: "1rem",
+                          "@media (width:344px)": { fontSize: "0.9rem" },
                           sm: "1rem",
                           md: "1.2rem",
                           lg: "1.7rem",
+                        },
+                        "@media (min-width:768px) and (max-width:820px)": {
+                          fontSize: "1.2rem",
                         },
                         maxHeight: "4rem",
                         overflowY: "auto",
@@ -176,14 +180,14 @@ const StyledCardGroup = ({
                   sx={{
                     pb: 1,
                     pt: { xs: 1, lg: 4 },
-                    px: { md: 2 },
-                    pl: { xs: 1, lg: 4 },
+                    px: { xs: 2, sm: 2 },
+                    pl: { xs: 1.5, lg: 4 },
                   }}
                 />
                 <Typography
                   variant="body2"
                   sx={{
-                    px: { xs: 1, md: 2, lg: 4 },
+                    px: { xs: 1.5, sm: 2, lg: 4 },
                     pb: { xs: 2, lg: 4 },
                     pt: 0,
                     textAlign: "start",
