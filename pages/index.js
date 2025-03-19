@@ -87,7 +87,6 @@ export default function Home() {
 
   useEffect(() => {
     if (error) {
-      alert("出現錯誤", error);
       console.error(error);
     }
   }, [error]);
